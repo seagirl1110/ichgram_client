@@ -1,0 +1,25 @@
+.auth_link_container {
+    width: 100%;
+    max-width: 350px;
+    padding: 11px;
+    border: 1px solid #DBDBDB;
+    border-radius: 1px;
+    background: #FFFFFF;
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+.text {
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+}
+
+.text_link {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    color: #0095F6;
+    text-decoration: none;
+}

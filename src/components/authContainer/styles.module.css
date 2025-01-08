@@ -1,0 +1,12 @@
+.auth_container {
+    width: 100%;
+    max-width: 350px;
+    padding: 30px 38px 23px;
+    border: 1px solid #DBDBDB;
+    border-radius: 1px;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
