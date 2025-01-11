@@ -3,25 +3,26 @@ import FormInput from '../formInput';
 import { IFormInputData } from '../formInput';
 import { UseFormRegister, FieldValues } from 'react-hook-form';
 
-export interface IFormContainerProps {
+export interface IFormInputContainerProps {
   inputList: IFormInputData[];
   register: UseFormRegister<FieldValues>;
 }
 
-function FormContainer({ inputList, register }: IFormContainerProps) {
+function FormInputContainer({ inputList, register }: IFormInputContainerProps) {
   return (
-    <form className={styles.form}>
+    <div className={styles.input_list_container}>
       {inputList.map((item, index) => (
         <FormInput
           key={index}
           type={item.type}
           placeholder={item.placeholder}
           name={item.name}
+          validation={item.validation}
           register={register}
         />
       ))}
-    </form>
+    </div>
   );
 }
 
-export default FormContainer;
+export default FormInputContainer;

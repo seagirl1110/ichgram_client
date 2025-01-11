@@ -5,19 +5,26 @@ export interface IFormInputData {
   type: string;
   placeholder: string;
   name: string;
+  validation: object;
 }
 
 export interface IFormInputProps extends IFormInputData {
   register: UseFormRegister<FieldValues>;
 }
 
-function FormInput({ type, placeholder, name, register }: IFormInputProps) {
+function FormInput({
+  type,
+  placeholder,
+  name,
+  validation,
+  register,
+}: IFormInputProps) {
   return (
     <input
       className={styles.input}
       type={type}
       placeholder={placeholder}
-      {...register(name)}
+      {...register(name, validation)}
     />
   );
 }
