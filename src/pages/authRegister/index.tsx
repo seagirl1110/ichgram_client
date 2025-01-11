@@ -73,7 +73,7 @@ function AuthRegister() {
         },
       });
 
-      navigate(`/auth/login`);
+      navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errMsg = error.response?.data.message;

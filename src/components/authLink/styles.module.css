@@ -1,6 +1,7 @@
 .auth_link_container {
     width: 100%;
     max-width: 350px;
+    min-height: 65px;
     padding: 11px;
     border: 1px solid #DBDBDB;
     border-radius: 1px;
@@ -8,6 +9,7 @@
     display: flex;
     gap: 6px;
     justify-content: center;
+    align-items: center;
 }
 
 .text {

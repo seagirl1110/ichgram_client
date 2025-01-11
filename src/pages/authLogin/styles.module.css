@@ -1,0 +1,60 @@
+.auth_login_container {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 93px;
+}
+
+.image {
+    max-width: 380px;
+}
+
+.login_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.login_info_container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.divider_container {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.divider_text {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 15px;
+    color: #737373;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    background: #DBDBDB;
+}
+
+.link {
+    font-size: 12px;
+    line-height: 16px;
+    color: #00376B;
+    text-decoration: none;
+    text-align: center;
+    margin-top: auto;
+}
