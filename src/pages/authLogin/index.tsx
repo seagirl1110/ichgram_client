@@ -42,13 +42,17 @@ function AuthLogin() {
 
   const onSubmitForm = async (data: FieldValues): Promise<void> => {
     try {
-      await axios.post(`${BASE_URL}/auth/login`, data, {
+      const response = await axios.post(`${BASE_URL}/auth/login`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      navigate('/home');
+      const { token } = response.data.data;
+      if (token) {
+        localStorage.setItem('token', token);
+        navigate('/home');
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errMsg = error.response?.data.message;

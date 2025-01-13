@@ -3,6 +3,8 @@ import './App.css';
 import AuthRegister from './pages/authRegister';
 import AuthLogin from './pages/authLogin';
 import Profile from './pages/profile';
+import ProtectedRoute from './components/protectedRoute';
+import { isTokenValid } from './utils/auth';
 
 export const BASE_URL = 'http://127.0.0.1:3333';
 
@@ -10,10 +12,20 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Navigate to={'/login'} />} />
+        <Route
+          path="/"
+          element={<Navigate to={isTokenValid() ? '/home' : '/login'} />}
+        />
         <Route path="/register" element={<AuthRegister />} />
         <Route path="/login" element={<AuthLogin />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
