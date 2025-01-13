@@ -1,0 +1,43 @@
+.menu_container {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #DBDBDB;
+    gap: 25px;
+    padding: 28px 25px;
+}
+
+.logo {
+    width: 97px;
+}
+
+.menu_list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.nav_link {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nav_link:last-child {
+    margin-top: 52px;
+}
+
+.link_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.link_text {
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.nav_link_active .link_text {
+    font-weight: 700;
+}
