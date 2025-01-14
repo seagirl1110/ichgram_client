@@ -1,5 +1,6 @@
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
@@ -7,9 +8,25 @@ import { getUserIdFromToken } from '../../utils/auth';
 import { IUserData } from '../../types/user';
 import { BASE_URL } from '../../App';
 import avatarIcon from './../../assets/icons/avatar.svg';
+import websiteIcon from './../../assets/icons/profile_website_link.svg';
 
 function Profile() {
-  const [userData, setUserData] = useState<IUserData | null>(null);
+  const [userData, setUserData] = useState<IUserData>({
+    _id: '',
+    full_name: '',
+    username: '',
+    email: '',
+    bio: '',
+    website: '',
+    image: '',
+    posts_count: 0,
+    followers_count: 0,
+    following_count: 0,
+    posts: [],
+    followers: [],
+    following: [],
+    created_at: '',
+  });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +63,8 @@ function Profile() {
     posts_count,
     followers_count,
     following_count,
-  } = userData || {};
+    posts,
+  } = userData;
 
   return (
     <MainContainer>
@@ -66,20 +84,41 @@ function Profile() {
                 />
               </div>
               <div className={styles.content}>
-                <div>
-                  {username && <div>{username}</div>}
-                  <Button name="Edit profile" secondary="true" />
+                <div className={styles.content_inner}>
+                  <div>{username}</div>
+                  <Button name="Edit profile" />
                 </div>
-                <div>
+                <div className={styles.content_counter}>
                   <div>{posts_count} posts</div>
                   <div>{followers_count} followers</div>
                   <div>{following_count} following</div>
                 </div>
-                {bio && <div>{bio}</div>}
-                {website && <div>{website}</div>}
+                {bio && <div className={styles.content_bio}>{bio}</div>}
+                {website && (
+                  <div className={styles.content_website}>
+                    <img
+                      className={styles.content_website_icon}
+                      src={websiteIcon}
+                      alt="link_icon"
+                    />
+                    <Link className={styles.content_website_link} to="">
+                      {website}
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
-            <div className={styles.posts}>posts</div>
+            <div className={styles.posts_container}>
+              {posts.map((item, index) => (
+                <div className={styles.post} key={index}>
+                  <img
+                    className={styles.post_image}
+                    src={item.images[0]}
+                    alt={item.description}
+                  />
+                </div>
+              ))}
+            </div>
           </>
         )}
       </div>
