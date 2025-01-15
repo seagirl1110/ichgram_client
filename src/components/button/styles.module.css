@@ -2,12 +2,20 @@
     font-size: 14px;
     font-weight: 600;
     line-height: 18px;
-    background: #0095F6;
-    color: #FFFFFF;
     border-radius: 8px;
     padding: 8px 16px;
     border: none;
     outline: none;
     width: 100%;
     cursor: pointer;
+}
+
+.btn_primary {
+    background: #0095F6;
+    color: #FFFFFF;
+}
+
+.btn_secondary {
+    background: #EFEFEF;
+    color: #000000;
 }

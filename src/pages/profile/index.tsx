@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
@@ -29,16 +29,23 @@ function Profile() {
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [myProfile, setMyProfile] = useState<boolean>(false);
+
+  const { userId } = useParams();
+
+  if (!userId) {
+    throw new Error('userId not found');
+  }
 
   useEffect(() => {
-    const getUserData = async (): Promise<void> => {
+    const userIdFromToken: string | null = getUserIdFromToken();
+
+    if (userId === userIdFromToken) {
+      setMyProfile(true);
+    }
+
+    const getUserData = async (userId: string): Promise<void> => {
       try {
-        const userId: string | null = getUserIdFromToken();
-
-        if (!userId) {
-          throw new Error('userId not found');
-        }
-
         const response = await axios.get<{ message: string; data: IUserData }>(
           `${BASE_URL}/user/${userId}`
         );
@@ -52,7 +59,7 @@ function Profile() {
       }
     };
 
-    getUserData();
+    getUserData(userId);
   }, []);
 
   const {
@@ -85,13 +92,44 @@ function Profile() {
               </div>
               <div className={styles.content}>
                 <div className={styles.content_inner}>
-                  <div>{username}</div>
-                  <Button name="Edit profile" />
+                  <div className={styles.content_name}>{username}</div>
+                  <div className={styles.content_actions}>
+                    {myProfile && (
+                      <Button
+                        name="Edit profile"
+                        typeStyle="secondary"
+                        minWidth={170}
+                      />
+                    )}
+                    {!myProfile && <Button name="Follow" minWidth={135} />}
+                    {!myProfile && (
+                      <Button
+                        name="Message"
+                        typeStyle="secondary"
+                        minWidth={190}
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className={styles.content_counter}>
-                  <div>{posts_count} posts</div>
-                  <div>{followers_count} followers</div>
-                  <div>{following_count} following</div>
+                <div className={styles.content_counter_container}>
+                  <div className={styles.content_counter}>
+                    <span className={styles.content_counter_count}>
+                      {posts_count}{' '}
+                    </span>
+                    <span>posts</span>
+                  </div>
+                  <div className={styles.content_counter}>
+                    <span className={styles.content_counter_count}>
+                      {followers_count}{' '}
+                    </span>
+                    <span>followers</span>
+                  </div>
+                  <div className={styles.content_counter}>
+                    <span className={styles.content_counter_count}>
+                      {following_count}{' '}
+                    </span>
+                    <span>following</span>
+                  </div>
                 </div>
                 {bio && <div className={styles.content_bio}>{bio}</div>}
                 {website && (

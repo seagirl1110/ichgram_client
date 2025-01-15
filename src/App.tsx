@@ -19,7 +19,7 @@ function App() {
         <Route path="/register" element={<AuthRegister />} />
         <Route path="/login" element={<AuthLogin />} />
         <Route
-          path="/profile"
+          path="/profile/:userId"
           element={
             <ProtectedRoute>
               <Profile />
