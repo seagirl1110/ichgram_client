@@ -1,4 +1,5 @@
-interface ITokenPayload {
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+interface ITokenPayload extends JwtPayload {
   id: string;
   iat: number;
   exp: number;
@@ -12,8 +13,7 @@ function getTokenPayload(): ITokenPayload | null {
   }
 
   try {
-    const payload: string = token.split('.')[1];
-    const decoded: ITokenPayload = JSON.parse(atob(payload));
+    const decoded = jwtDecode<ITokenPayload>(token);
     return decoded;
   } catch (error) {
     console.log('Invalid token:', error);
@@ -24,7 +24,7 @@ function getTokenPayload(): ITokenPayload | null {
 export function isTokenValid(): boolean {
   const decoded: ITokenPayload | null = getTokenPayload();
 
-  if (!decoded) {
+  if (!decoded || !decoded.exp) {
     return false;
   }
 
