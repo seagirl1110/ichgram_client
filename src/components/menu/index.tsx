@@ -8,7 +8,7 @@ import messagesIcons from './../../assets/icons/menu_messages.svg';
 import notificationsIcons from './../../assets/icons/menu_notifications.svg';
 import createIcons from './../../assets/icons/menu_create.svg';
 import profileIcons from './../../assets/icons/menu_profile.svg';
-import { getUserIdFromToken } from '../../utils/auth';
+import { getUserIdFromToken } from '../../utils/auth.ts';
 
 interface IMenuProps {
   menuList: string[];

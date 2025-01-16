@@ -4,8 +4,9 @@ import AuthRegister from './pages/authRegister';
 import AuthLogin from './pages/authLogin';
 import Home from './pages/home';
 import Profile from './pages/profile';
+import ProfileEdit from './pages/profileEdit';
 import ProtectedRoute from './components/protectedRoute';
-import { isTokenValid } from './utils/auth';
+import { isTokenValid } from './utils/auth.ts';
 
 export const BASE_URL = 'http://127.0.0.1:3333';
 
@@ -32,6 +33,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:userId/edit"
+          element={
+            <ProtectedRoute>
+              <ProfileEdit />
             </ProtectedRoute>
           }
         />

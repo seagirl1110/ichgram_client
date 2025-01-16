@@ -1,65 +1,19 @@
 import styles from './styles.module.css';
-import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
-import { getUserIdFromToken } from '../../utils/auth';
-import { IUserData } from '../../types/user';
-import { BASE_URL } from '../../App';
 import avatarIcon from './../../assets/icons/avatar.svg';
 import websiteIcon from './../../assets/icons/profile_website_link.svg';
+import useUserData from '../../utils/useUserData.ts';
 
 function Profile() {
-  const [userData, setUserData] = useState<IUserData>({
-    _id: '',
-    full_name: '',
-    username: '',
-    email: '',
-    bio: '',
-    website: '',
-    image: '',
-    posts_count: 0,
-    followers_count: 0,
-    following_count: 0,
-    posts: [],
-    followers: [],
-    following: [],
-    created_at: '',
-  });
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [myProfile, setMyProfile] = useState<boolean>(false);
-
   const { userId } = useParams();
 
   if (!userId) {
-    throw new Error('userId not found');
+    throw new Error('userId is not found');
   }
 
-  useEffect(() => {
-    const userIdFromToken: string | null = getUserIdFromToken();
-
-    if (userId === userIdFromToken) {
-      setMyProfile(true);
-    }
-
-    const getUserData = async (userId: string): Promise<void> => {
-      try {
-        const response = await axios.get<{ message: string; data: IUserData }>(
-          `${BASE_URL}/user/${userId}`
-        );
-
-        setUserData(response.data.data);
-      } catch (err) {
-        setError(`Failed to load user data. ${err}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getUserData(userId);
-  }, [userId]);
+  const { userData, loading, error, myProfile } = useUserData(userId);
 
   const {
     username,
@@ -74,8 +28,8 @@ function Profile() {
 
   const navigate = useNavigate();
 
-  const handleEditProfile = () => {
-    navigate('/edit');
+  const handleEditProfile = (): void => {
+    navigate(`/profile/${userId}/edit`);
   };
 
   return (
