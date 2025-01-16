@@ -8,6 +8,7 @@ import messagesIcons from './../../assets/icons/menu_messages.svg';
 import notificationsIcons from './../../assets/icons/menu_notifications.svg';
 import createIcons from './../../assets/icons/menu_create.svg';
 import profileIcons from './../../assets/icons/menu_profile.svg';
+import { getUserIdFromToken } from '../../utils/auth';
 
 interface IMenuProps {
   menuList: string[];
@@ -21,6 +22,8 @@ const icons: Record<string, string> = {
   Notifications: notificationsIcons,
   Create: createIcons,
 };
+
+const userId: string | null = getUserIdFromToken();
 
 function Menu({ menuList }: IMenuProps) {
   return (
@@ -41,17 +44,19 @@ function Menu({ menuList }: IMenuProps) {
             <span className={styles.link_text}>{item}</span>
           </NavLink>
         ))}
-        <NavLink
-          className={({ isActive }) =>
-            isActive
-              ? `${styles.nav_link} ${styles.nav_link_active}`
-              : `${styles.nav_link}`
-          }
-          to="/profile"
-        >
-          <img src={profileIcons} alt="icons" className={styles.link_icon} />
-          <span className={styles.link_text}>Profile</span>
-        </NavLink>
+        {userId && (
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.nav_link} ${styles.nav_link_active}`
+                : `${styles.nav_link}`
+            }
+            to={`/profile/${userId}`}
+          >
+            <img src={profileIcons} alt="icons" className={styles.link_icon} />
+            <span className={styles.link_text}>Profile</span>
+          </NavLink>
+        )}
       </nav>
     </aside>
   );
