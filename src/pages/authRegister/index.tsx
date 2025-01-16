@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
-import { BASE_URL } from '../../App';
+import { BASE_URL } from '../../config/index';
 import AuthContainer from '../../components/authContainer';
 import AuthLink from '../../components/authLink';
 import Button from '../../components/button';

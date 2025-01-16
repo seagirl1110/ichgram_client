@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosWithToken from './axiosWithToken.ts';
 import { IUserData } from './../types/user.tsx';
 import { getUserIdFromToken } from './auth.ts';
-import { BASE_URL } from './../App.tsx';
 
 interface IUseUserDataReturn {
   userData: IUserData;
@@ -41,9 +40,10 @@ const useUserData = (userId: string): IUseUserDataReturn => {
 
     const getUserData = async (userId: string): Promise<void> => {
       try {
-        const response = await axios.get<{ message: string; data: IUserData }>(
-          `${BASE_URL}/user/${userId}`
-        );
+        const response = await axiosWithToken.get<{
+          message: string;
+          data: IUserData;
+        }>(`/user/${userId}`);
 
         setUserData(response.data.data);
       } catch (err) {

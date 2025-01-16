@@ -5,8 +5,12 @@ interface ITokenPayload extends JwtPayload {
   exp: number;
 }
 
+export function getToken(): string | null {
+  return localStorage.getItem('token');
+}
+
 function getTokenPayload(): ITokenPayload | null {
-  const token: string | null = localStorage.getItem('token');
+  const token: string | null = getToken();
 
   if (!token) {
     return null;

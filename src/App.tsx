@@ -8,8 +8,6 @@ import ProfileEdit from './pages/profileEdit';
 import ProtectedRoute from './components/protectedRoute';
 import { isTokenValid } from './utils/auth.ts';
 
-export const BASE_URL = 'http://127.0.0.1:3333';
-
 function App() {
   return (
     <div className="App">
