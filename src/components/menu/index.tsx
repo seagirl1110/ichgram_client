@@ -23,9 +23,9 @@ const icons: Record<string, string> = {
   Create: createIcons,
 };
 
-const userId: string | null = getUserIdFromToken();
-
 function Menu({ menuList }: IMenuProps) {
+  const userId: string | null = getUserIdFromToken();
+
   return (
     <aside className={styles.menu_container}>
       <img src={logo} alt="ICHGRAM" className={styles.logo} />
