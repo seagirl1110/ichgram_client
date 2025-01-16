@@ -2,12 +2,12 @@ import styles from './styles.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
+import axiosWithToken from '../../utils/axiosWithToken';
 import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
 import FormErrorContainer from '../../components/formErrorContainer';
 import useUserData from '../../utils/useUserData';
 import avatarIcon from './../../assets/icons/avatar.svg';
-import { BASE_URL } from '../../App';
 
 function ProfileEdit() {
   const { userId } = useParams();
@@ -21,33 +21,21 @@ function ProfileEdit() {
   const { username, bio, website, image } = userData;
 
   interface IInputData {
-    placeholder: string;
+    value: string;
     name: string;
     label: string;
-    validation?: object;
   }
 
   const inputList: IInputData[] = [
     {
-      placeholder: username,
+      value: '',
       name: 'username',
       label: 'Username',
     },
     {
-      placeholder: website,
+      value: website,
       name: 'website',
       label: 'Website',
-    },
-    {
-      placeholder: bio,
-      name: 'bio',
-      label: 'About',
-      validation: {
-        maxLength: {
-          value: 150,
-          message: 'About must be no more than 150 characters',
-        },
-      },
     },
   ];
 
@@ -62,11 +50,7 @@ function ProfileEdit() {
 
   const onSubmitForm = async (data: FieldValues): Promise<void> => {
     try {
-      await axios.put(`${BASE_URL}/user/update`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      await axiosWithToken.put('/user/update', data);
 
       navigate(`/profile/${userId}`);
     } catch (error) {
@@ -75,7 +59,8 @@ function ProfileEdit() {
         if (errMsg === 'this username is taken') {
           setError('username', {
             type: 'manual',
-            message: 'This username is already taken.',
+            message:
+              'This username is already taken. Leave the field blank if you do not want to change the username.',
           });
         }
       }
@@ -106,7 +91,7 @@ function ProfileEdit() {
                     <div className={styles.content_name}>{username}</div>
                     <div className={styles.content_bio}>{bio}</div>
                   </div>
-                  <div>
+                  <div className={styles.content_actions}>
                     <Button name="New photo" />
                   </div>
                 </div>
@@ -121,16 +106,32 @@ function ProfileEdit() {
                         <input
                           className={styles.input}
                           type="text"
-                          placeholder={item.placeholder}
-                          {...register(item.name, item.validation)}
+                          defaultValue={item.value}
+                          {...register(item.name)}
                         />
                       </label>
                     ))}
+                    <label className={styles.label_container}>
+                      <span className={styles.label}>About</span>
+                      <textarea
+                        className={styles.input}
+                        defaultValue={bio}
+                        {...register('bio', {
+                          maxLength: {
+                            value: 150,
+                            message:
+                              'About must be no more than 150 characters',
+                          },
+                        })}
+                      />
+                    </label>
+                    {Object.keys(errors).length > 0 && (
+                      <FormErrorContainer errorList={errors} />
+                    )}
                   </div>
-                  {Object.keys(errors).length > 0 && (
-                    <FormErrorContainer errorList={errors} />
-                  )}
-                  <Button name="Save" type="submit" />
+                  <div className={styles.form_actions}>
+                    <Button name="Save" type="submit" minWidth={268} />
+                  </div>
                 </form>
               </div>
             </>
