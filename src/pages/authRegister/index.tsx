@@ -91,7 +91,6 @@ function AuthRegister() {
           });
         }
       }
-      console.log(error);
     }
   };
 

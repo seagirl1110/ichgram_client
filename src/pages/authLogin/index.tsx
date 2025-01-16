@@ -67,7 +67,6 @@ function AuthLogin() {
           });
         }
       }
-      console.log(error);
     }
   };
 

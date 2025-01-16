@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
@@ -52,15 +52,14 @@ function Profile() {
 
         setUserData(response.data.data);
       } catch (err) {
-        setError('Failed to load user data');
-        console.log(err);
+        setError(`Failed to load user data. ${err}`);
       } finally {
         setLoading(false);
       }
     };
 
     getUserData(userId);
-  }, []);
+  }, [userId]);
 
   const {
     username,
@@ -72,6 +71,12 @@ function Profile() {
     following_count,
     posts,
   } = userData;
+
+  const navigate = useNavigate();
+
+  const handleEditProfile = () => {
+    navigate('/edit');
+  };
 
   return (
     <MainContainer>
@@ -97,6 +102,7 @@ function Profile() {
                     {myProfile && (
                       <Button
                         name="Edit profile"
+                        onClick={handleEditProfile}
                         typeStyle="secondary"
                         minWidth={170}
                       />
