@@ -5,6 +5,9 @@ import Button from '../../components/button';
 import avatarIcon from './../../assets/icons/avatar.svg';
 import websiteIcon from './../../assets/icons/profile_website_link.svg';
 import useUserData from '../../utils/useUserData.ts';
+import { useState } from 'react';
+import ModalContainer from '../../components/modal/index.tsx';
+import Post from '../../components/post/index.tsx';
 
 function Profile() {
   const { userId } = useParams();
@@ -12,6 +15,9 @@ function Profile() {
   if (!userId) {
     throw new Error('userId is not found');
   }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPostId, setModalPostId] = useState('');
 
   const { userData, loading, error, myProfile } = useUserData(userId);
 
@@ -32,93 +38,111 @@ function Profile() {
     navigate(`/profile/${userId}/edit`);
   };
 
+  const handleClickPost = (id: string): void => {
+    setIsModalOpen(true);
+    setModalPostId(id);
+  };
+
   return (
     <MainContainer>
       <div className={styles.profile_container}>
-        {loading ? (
-          <div>Loading...</div>
-        ) : error ? (
-          <div>Error: {error}</div>
-        ) : (
-          <>
-            <div className={styles.content_container}>
-              <div className={styles.avatar_container}>
-                <img
-                  className={styles.avatar}
-                  src={image ? image : avatarIcon}
-                  alt="avatar"
-                />
-              </div>
-              <div className={styles.content}>
-                <div className={styles.content_inner}>
-                  <div className={styles.content_name}>{username}</div>
-                  <div className={styles.content_actions}>
-                    {myProfile && (
-                      <Button
-                        name="Edit profile"
-                        onClick={handleEditProfile}
-                        typeStyle="secondary"
-                        minWidth={170}
-                      />
-                    )}
-                    {!myProfile && <Button name="Follow" minWidth={135} />}
-                    {!myProfile && (
-                      <Button
-                        name="Message"
-                        typeStyle="secondary"
-                        minWidth={190}
-                      />
-                    )}
-                  </div>
-                </div>
-                <div className={styles.content_counter_container}>
-                  <div className={styles.content_counter}>
-                    <span className={styles.content_counter_count}>
-                      {posts_count}{' '}
-                    </span>
-                    <span>posts</span>
-                  </div>
-                  <div className={styles.content_counter}>
-                    <span className={styles.content_counter_count}>
-                      {followers_count}{' '}
-                    </span>
-                    <span>followers</span>
-                  </div>
-                  <div className={styles.content_counter}>
-                    <span className={styles.content_counter_count}>
-                      {following_count}{' '}
-                    </span>
-                    <span>following</span>
-                  </div>
-                </div>
-                {bio && <div className={styles.content_bio}>{bio}</div>}
-                {website && (
-                  <div className={styles.content_website}>
-                    <img
-                      className={styles.content_website_icon}
-                      src={websiteIcon}
-                      alt="link_icon"
-                    />
-                    <Link className={styles.content_website_link} to="">
-                      {website}
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className={styles.posts_container}>
-              {posts.map((item, index) => (
-                <div className={styles.post} key={index}>
+        <div className={styles.profile_inner}>
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div>Error: {error}</div>
+          ) : (
+            <>
+              <div className={styles.content_container}>
+                <div className={styles.avatar_container}>
                   <img
-                    className={styles.post_image}
-                    src={item.images[0]}
-                    alt={item.description}
+                    className={styles.avatar}
+                    src={image ? image : avatarIcon}
+                    alt="avatar"
                   />
                 </div>
-              ))}
-            </div>
-          </>
-        )}
+                <div className={styles.content}>
+                  <div className={styles.content_inner}>
+                    <div className={styles.content_name}>{username}</div>
+                    <div className={styles.content_actions}>
+                      {myProfile && (
+                        <Button
+                          name="Edit profile"
+                          onClick={handleEditProfile}
+                          typeStyle="secondary"
+                          minWidth={170}
+                        />
+                      )}
+                      {!myProfile && <Button name="Follow" minWidth={135} />}
+                      {!myProfile && (
+                        <Button
+                          name="Message"
+                          typeStyle="secondary"
+                          minWidth={190}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles.content_counter_container}>
+                    <div className={styles.content_counter}>
+                      <span className={styles.content_counter_count}>
+                        {posts_count}{' '}
+                      </span>
+                      <span>posts</span>
+                    </div>
+                    <div className={styles.content_counter}>
+                      <span className={styles.content_counter_count}>
+                        {followers_count}{' '}
+                      </span>
+                      <span>followers</span>
+                    </div>
+                    <div className={styles.content_counter}>
+                      <span className={styles.content_counter_count}>
+                        {following_count}{' '}
+                      </span>
+                      <span>following</span>
+                    </div>
+                  </div>
+                  {bio && <div className={styles.content_bio}>{bio}</div>}
+                  {website && (
+                    <div className={styles.content_website}>
+                      <img
+                        className={styles.content_website_icon}
+                        src={websiteIcon}
+                        alt="link_icon"
+                      />
+                      <Link className={styles.content_website_link} to="">
+                        {website}
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className={styles.posts_container}>
+                {posts.map((item, index) => (
+                  <div
+                    className={styles.post}
+                    key={index}
+                    onClick={() => {
+                      handleClickPost(item._id);
+                    }}
+                  >
+                    <img
+                      className={styles.post_image}
+                      src={item.images[0]}
+                      alt={item.description}
+                    />
+                  </div>
+                ))}
+              </div>
+              {isModalOpen && (
+                <ModalContainer>
+                  <Post postId={modalPostId} />
+                </ModalContainer>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </MainContainer>
   );

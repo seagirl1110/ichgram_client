@@ -15,7 +15,27 @@
     color: #FFFFFF;
 }
 
+.btn_primary:hover {
+    background: #0b8ce1;
+}
+
 .btn_secondary {
     background: #EFEFEF;
     color: #000000;
+}
+
+.btn_secondary:hover {
+    background: #e5e4e4;
+}
+
+.btn_text {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+    background: transparent;
+    color: #0095F6;
+}
+
+.btn_text:hover {
+    background-color: #f8f8f8;
 }

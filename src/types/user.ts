@@ -1,4 +1,4 @@
-import { IPost } from './post';
+import { IPostData } from './post';
 
 export interface IUserData {
   _id: string;
@@ -11,7 +11,7 @@ export interface IUserData {
   posts_count: number;
   followers_count: number;
   following_count: number;
-  posts: IPost[];
+  posts: IPostData[];
   followers: string[];
   following: string[];
   created_at: string;

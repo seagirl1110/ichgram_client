@@ -4,7 +4,7 @@ interface IButtonProps {
   name: string;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
-  typeStyle?: 'primary' | 'secondary';
+  typeStyle?: 'primary' | 'secondary' | 'text';
   minWidth?: number;
 }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosWithToken from './axiosWithToken.ts';
-import { IUserData } from './../types/user.tsx';
+import { IUserData } from '../types/user.ts';
 import { getUserIdFromToken } from './auth.ts';
 
 interface IUseUserDataReturn {
