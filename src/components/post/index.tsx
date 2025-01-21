@@ -90,7 +90,7 @@ function Post({ postId }: IPostProps) {
               ) : (
                 <div>
                   <div></div>
-                  <Button name="Подписаться" typeStyle="text" minWidth={85} />
+                  <Button name="Follow" typeStyle="text" minWidth={85} />
                 </div>
               )}
             </div>

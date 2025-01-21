@@ -43,6 +43,10 @@ function Profile() {
     setModalPostId(id);
   };
 
+  const closeModal = (): void => {
+    setIsModalOpen(false);
+  };
+
   return (
     <MainContainer>
       <div className={styles.profile_container}>
@@ -136,7 +140,7 @@ function Profile() {
                 ))}
               </div>
               {isModalOpen && (
-                <ModalContainer>
+                <ModalContainer onClick={closeModal}>
                   <Post postId={modalPostId} />
                 </ModalContainer>
               )}
