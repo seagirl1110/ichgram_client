@@ -7,7 +7,7 @@ import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
 import FormErrorContainer from '../../components/formErrorContainer';
 import useUserData from '../../utils/useUserData';
-import avatarIcon from './../../assets/icons/avatar.svg';
+import Avatar from '../../components/avatar';
 
 function ProfileEdit() {
   const { userId } = useParams();
@@ -80,13 +80,7 @@ function ProfileEdit() {
               <div className={styles.edit_profile_inner}>
                 <h3 className={styles.title_page}>Edit profile</h3>
                 <div className={styles.content}>
-                  <div className={styles.avatar_container}>
-                    <img
-                      className={styles.avatar}
-                      src={image ? image : avatarIcon}
-                      alt="avatar"
-                    />
-                  </div>
+                  <Avatar image={image} width={56} />
                   <div className={styles.content_inner}>
                     <div className={styles.content_name}>{username}</div>
                     <div className={styles.content_bio}>{bio}</div>

@@ -1,7 +1,9 @@
 import styles from './styles.module.css';
 import { useForm, FieldValues } from 'react-hook-form';
 import usePostData from '../../utils/usePostData';
-import avatarIcon from './../../assets/icons/avatar.svg';
+import Avatar from '../avatar';
+import Username from '../username';
+import Time from '../time';
 import postMore from './../../assets/icons/post_more.svg';
 import postLikes from './../../assets/icons/post_likes.svg';
 import postComments from './../../assets/icons/post_comments.svg';
@@ -75,14 +77,8 @@ function Post({ postId }: IPostProps) {
           </div>
           <div className={styles.post}>
             <div className={styles.post_profile}>
-              <div className={styles.avatar_container}>
-                <img
-                  className={styles.avatar}
-                  src={user_id.image ? user_id.image : avatarIcon}
-                  alt="avatar"
-                />
-              </div>
-              <div className={styles.username}>{user_id.username}</div>
+              <Avatar image={user_id.image} />
+              <Username name={user_id.username} />
               {myProfile ? (
                 <div className={styles.post_more_btn}>
                   <img src={postMore} alt="more" />
@@ -95,39 +91,25 @@ function Post({ postId }: IPostProps) {
               )}
             </div>
             <div className={styles.post_content}>
-              <div className={styles.avatar_container}>
-                <img
-                  className={styles.avatar}
-                  src={user_id.image ? user_id.image : avatarIcon}
-                  alt="avatar"
-                />
-              </div>
+              <Avatar image={user_id.image} />
               <div className={styles.info}>
                 <div>
-                  <span className={styles.username}>{user_id.username}</span>
+                  <Username name={user_id.username} />
                   <span className={styles.text}>{description}</span>
                 </div>
-                <div className={styles.time}>{created_at}</div>
+                <Time time={created_at} />
               </div>
             </div>
             <div className={styles.post_comment_list}>
               {comments.map((item, index) => (
                 <div className={styles.comment} key={index}>
-                  <div className={styles.avatar_container}>
-                    <img
-                      className={styles.avatar}
-                      src={item.user_id.image ? item.user_id.image : avatarIcon}
-                      alt="avatar"
-                    />
-                  </div>
+                  <Avatar image={item.user_id.image} />
                   <div className={styles.info}>
                     <div>
-                      <span className={styles.username}>
-                        {item.user_id.username}
-                      </span>
+                      <Username name={item.user_id.username} />
                       <span className={styles.text}>{item.text}</span>
                     </div>
-                    <div className={styles.time}>{item.created_at}</div>
+                    <Time time={item.created_at} />
                   </div>
                 </div>
               ))}

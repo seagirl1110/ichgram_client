@@ -18,23 +18,6 @@
     gap: 85px;
 }
 
-.avatar_container {
-    width: 168px;
-    height: 168px;
-    background-image: url('./../../assets/icons/avatar_bg.svg');
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: inherit;
-}
-
 .content {
     display: flex;
     flex-direction: column;
