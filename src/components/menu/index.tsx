@@ -38,7 +38,11 @@ function Menu({ menuList }: IMenuProps) {
                 : `${styles.nav_link}`
             }
             key={index}
-            to={`/${item.toLowerCase()}`}
+            to={
+              item === 'Create'
+                ? `/profile/${userId}/create-post`
+                : `/${item.toLowerCase()}`
+            }
           >
             <img src={icons[item]} alt="icons" className={styles.link_icon} />
             <span className={styles.link_text}>{item}</span>

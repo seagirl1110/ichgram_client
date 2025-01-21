@@ -1,11 +1,14 @@
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
+import { getUserIdFromToken } from '../../utils/auth';
 
 interface IFooterProps {
   menuList: string[];
 }
 
 function Footer({ menuList }: IFooterProps) {
+  const userId: string | null = getUserIdFromToken();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.link_container}>
@@ -13,7 +16,11 @@ function Footer({ menuList }: IFooterProps) {
           <Link
             className={styles.link}
             key={index}
-            to={`/${item.toLowerCase()}`}
+            to={
+              item === 'Create'
+                ? `/profile/${userId}/create-post`
+                : `/${item.toLowerCase()}`
+            }
           >
             {item}
           </Link>

@@ -42,6 +42,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/profile/:userId/create-post"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );

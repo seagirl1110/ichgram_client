@@ -1,11 +1,11 @@
 import styles from './styles.module.css';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import MainContainer from '../../components/mainContainer';
 import Button from '../../components/button';
-import avatarIcon from './../../assets/icons/avatar.svg';
+import Avatar from '../../components/avatar/index.tsx';
 import websiteIcon from './../../assets/icons/profile_website_link.svg';
 import useUserData from '../../utils/useUserData.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalContainer from '../../components/modal/index.tsx';
 import Post from '../../components/post/index.tsx';
 
@@ -16,8 +16,11 @@ function Profile() {
     throw new Error('userId is not found');
   }
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalPostId, setModalPostId] = useState('');
+  const [modalPostData, setModalPostData] = useState({
+    isOpen: false,
+    postId: '',
+  });
+  const [isModalCreatePostOpen, setIsModalCreatePostOpen] = useState(false);
 
   const { userData, loading, error, myProfile } = useUserData(userId);
 
@@ -33,18 +36,31 @@ function Profile() {
   } = userData;
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname.endsWith('create-post')) {
+      setIsModalCreatePostOpen(true);
+    } else {
+      setIsModalCreatePostOpen(false);
+    }
+  }, [pathname]);
 
   const handleEditProfile = (): void => {
     navigate(`/profile/${userId}/edit`);
   };
 
   const handleClickPost = (id: string): void => {
-    setIsModalOpen(true);
-    setModalPostId(id);
+    setModalPostData({ isOpen: true, postId: id });
   };
 
-  const closeModal = (): void => {
-    setIsModalOpen(false);
+  const closeModalPostData = (): void => {
+    setModalPostData({ isOpen: false, postId: '' });
+  };
+
+  const closeModalCreatePost = (): void => {
+    setIsModalCreatePostOpen(false);
+    navigate(`/profile/${userId}`);
   };
 
   return (
@@ -58,13 +74,7 @@ function Profile() {
           ) : (
             <>
               <div className={styles.content_container}>
-                <div className={styles.avatar_container}>
-                  <img
-                    className={styles.avatar}
-                    src={image ? image : avatarIcon}
-                    alt="avatar"
-                  />
-                </div>
+                <Avatar image={image} width={168} active={true} />
                 <div className={styles.content}>
                   <div className={styles.content_inner}>
                     <div className={styles.content_name}>{username}</div>
@@ -139,9 +149,14 @@ function Profile() {
                   </div>
                 ))}
               </div>
-              {isModalOpen && (
-                <ModalContainer onClick={closeModal}>
-                  <Post postId={modalPostId} />
+              {modalPostData.isOpen && (
+                <ModalContainer onClick={closeModalPostData}>
+                  <Post postId={modalPostData.postId} />
+                </ModalContainer>
+              )}
+              {isModalCreatePostOpen && (
+                <ModalContainer onClick={closeModalCreatePost}>
+                  <div>Create post</div>
                 </ModalContainer>
               )}
             </>
