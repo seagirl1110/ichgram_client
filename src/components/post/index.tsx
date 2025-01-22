@@ -14,9 +14,10 @@ import Button from '../button';
 
 interface IPostProps {
   postId: string;
+  actionsFunc: () => void;
 }
 
-function Post({ postId }: IPostProps) {
+function Post({ postId, actionsFunc }: IPostProps) {
   const { postData, loading, error, myProfile, refreshPostData } =
     usePostData(postId);
 
@@ -80,7 +81,7 @@ function Post({ postId }: IPostProps) {
               <Avatar image={user_id.image} />
               <Username name={user_id.username} />
               {myProfile ? (
-                <div className={styles.post_more_btn}>
+                <div className={styles.post_more_btn} onClick={actionsFunc}>
                   <img src={postMore} alt="more" />
                 </div>
               ) : (

@@ -10,16 +10,10 @@ import smile from './../../assets/icons/post_smile.svg';
 interface ICreatePostProps {
   username: string;
   userImage: string;
-  addSubmitFunc: () => void;
-  addSubmitFunc2: () => void;
+  createFunc: () => void;
 }
 
-function CreatePost({
-  username,
-  userImage,
-  addSubmitFunc,
-  addSubmitFunc2,
-}: ICreatePostProps) {
+function CreatePost({ username, userImage, createFunc }: ICreatePostProps) {
   const {
     register,
     handleSubmit,
@@ -34,8 +28,7 @@ function CreatePost({
 
       await axiosWithToken.post(`/post`, formData);
 
-      addSubmitFunc();
-      addSubmitFunc2();
+      createFunc();
     } catch (error) {
       console.log(error);
     }

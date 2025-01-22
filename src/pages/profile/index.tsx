@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import ModalContainer from '../../components/modal/index.tsx';
 import Post from '../../components/post/index.tsx';
 import CreatePost from '../../components/createPost/index.tsx';
+import ActionsPost from '../../components/actionsPost/index.tsx';
 
 function Profile() {
   const { userId } = useParams();
@@ -22,6 +23,7 @@ function Profile() {
     postId: '',
   });
   const [isModalCreatePostOpen, setIsModalCreatePostOpen] = useState(false);
+  const [isModalActionsPostOpen, setIsModalActionsPostOpen] = useState(false);
 
   const { userData, loading, error, myProfile, refreshUserData } =
     useUserData(userId);
@@ -56,6 +58,10 @@ function Profile() {
     setModalPostData({ isOpen: true, postId: id });
   };
 
+  const handleClickActionsPost = (): void => {
+    setIsModalActionsPostOpen(true);
+  };
+
   const closeModalPostData = (): void => {
     setModalPostData({ isOpen: false, postId: '' });
   };
@@ -63,6 +69,21 @@ function Profile() {
   const closeModalCreatePost = (): void => {
     setIsModalCreatePostOpen(false);
     navigate(`/profile/${userId}`);
+  };
+
+  const closeModalActionsPost = (): void => {
+    setIsModalActionsPostOpen(false);
+  };
+
+  const createPostFunc = () => {
+    closeModalCreatePost();
+    refreshUserData(userId);
+  };
+
+  const deletePostFunc = () => {
+    closeModalActionsPost();
+    closeModalPostData();
+    refreshUserData(userId);
   };
 
   return (
@@ -153,7 +174,10 @@ function Profile() {
               </div>
               {modalPostData.isOpen && (
                 <ModalContainer onClick={closeModalPostData}>
-                  <Post postId={modalPostData.postId} />
+                  <Post
+                    postId={modalPostData.postId}
+                    actionsFunc={handleClickActionsPost}
+                  />
                 </ModalContainer>
               )}
               {isModalCreatePostOpen && (
@@ -161,8 +185,16 @@ function Profile() {
                   <CreatePost
                     username={username}
                     userImage={image}
-                    addSubmitFunc={closeModalCreatePost}
-                    addSubmitFunc2={() => refreshUserData(userId)}
+                    createFunc={createPostFunc}
+                  />
+                </ModalContainer>
+              )}
+
+              {isModalActionsPostOpen && (
+                <ModalContainer onClick={closeModalActionsPost}>
+                  <ActionsPost
+                    postId={modalPostData.postId}
+                    deleteFunc={deletePostFunc}
                   />
                 </ModalContainer>
               )}

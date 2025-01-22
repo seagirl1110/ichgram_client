@@ -1,0 +1,32 @@
+.actions_post_container {
+    width: 400px;
+    min-height: 240px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
+.post_action {
+    height: 48px;
+    border-top: 1px solid #DBDBDB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000;
+}
+
+.post_action:first-child {
+    border: none;
+    color: #ED4956;
+    font-weight: 700;
+}
+
+.post_action:hover {
+    background-color: #f2f2f2;
+}

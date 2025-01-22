@@ -35,10 +35,18 @@
 }
 
 .post_more_btn {
-    width: 21px;
-    height: 21px;
+    width: 28px;
+    height: 27px;
     cursor: pointer;
     margin-left: auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post_more_btn:hover {
+    background-color: #f8f6f6;
 }
 
 .post_content {
