@@ -8,6 +8,7 @@ interface IUseUserDataReturn {
   loading: boolean;
   error: string | null;
   myProfile: boolean;
+  refreshUserData: (userId: string) => Promise<void>;
 }
 
 const useUserData = (userId: string): IUseUserDataReturn => {
@@ -31,6 +32,21 @@ const useUserData = (userId: string): IUseUserDataReturn => {
   const [error, setError] = useState<string | null>(null);
   const [myProfile, setMyProfile] = useState<boolean>(false);
 
+  const getUserData = async (userId: string): Promise<void> => {
+    try {
+      const response = await axiosWithToken.get<{
+        message: string;
+        data: IUserData;
+      }>(`/user/${userId}`);
+
+      setUserData(response.data.data);
+    } catch (err) {
+      setError(`Failed to load user data. ${err}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const userIdFromToken: string | null = getUserIdFromToken();
 
@@ -38,25 +54,10 @@ const useUserData = (userId: string): IUseUserDataReturn => {
       setMyProfile(true);
     }
 
-    const getUserData = async (userId: string): Promise<void> => {
-      try {
-        const response = await axiosWithToken.get<{
-          message: string;
-          data: IUserData;
-        }>(`/user/${userId}`);
-
-        setUserData(response.data.data);
-      } catch (err) {
-        setError(`Failed to load user data. ${err}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     getUserData(userId);
   }, [userId]);
 
-  return { userData, loading, error, myProfile };
+  return { userData, loading, error, myProfile, refreshUserData: getUserData };
 };
 
 export default useUserData;

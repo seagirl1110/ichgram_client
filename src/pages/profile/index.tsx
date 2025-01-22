@@ -8,6 +8,7 @@ import useUserData from '../../utils/useUserData.ts';
 import { useEffect, useState } from 'react';
 import ModalContainer from '../../components/modal/index.tsx';
 import Post from '../../components/post/index.tsx';
+import CreatePost from '../../components/createPost/index.tsx';
 
 function Profile() {
   const { userId } = useParams();
@@ -22,7 +23,8 @@ function Profile() {
   });
   const [isModalCreatePostOpen, setIsModalCreatePostOpen] = useState(false);
 
-  const { userData, loading, error, myProfile } = useUserData(userId);
+  const { userData, loading, error, myProfile, refreshUserData } =
+    useUserData(userId);
 
   const {
     username,
@@ -133,7 +135,7 @@ function Profile() {
                 </div>
               </div>
               <div className={styles.posts_container}>
-                {posts.map((item, index) => (
+                {[...posts].reverse().map((item, index) => (
                   <div
                     className={styles.post}
                     key={index}
@@ -156,7 +158,12 @@ function Profile() {
               )}
               {isModalCreatePostOpen && (
                 <ModalContainer onClick={closeModalCreatePost}>
-                  <div>Create post</div>
+                  <CreatePost
+                    username={username}
+                    userImage={image}
+                    addSubmitFunc={closeModalCreatePost}
+                    addSubmitFunc2={() => refreshUserData(userId)}
+                  />
                 </ModalContainer>
               )}
             </>

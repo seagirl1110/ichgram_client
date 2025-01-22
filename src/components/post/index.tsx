@@ -7,7 +7,7 @@ import Time from '../time';
 import postMore from './../../assets/icons/post_more.svg';
 import postLikes from './../../assets/icons/post_likes.svg';
 import postComments from './../../assets/icons/post_comments.svg';
-import addComment from './../../assets/icons/post_comment_smile.svg';
+import addComment from './../../assets/icons/post_smile.svg';
 import axiosWithToken from '../../utils/axiosWithToken';
 import { getUserIdFromToken } from '../../utils/auth';
 import Button from '../button';
