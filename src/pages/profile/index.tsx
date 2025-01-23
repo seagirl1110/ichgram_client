@@ -10,6 +10,10 @@ import ModalContainer from '../../components/modal/index.tsx';
 import Post from '../../components/post/index.tsx';
 import CreatePost from '../../components/createPost/index.tsx';
 import ActionsPost from '../../components/actionsPost/index.tsx';
+import FollowBtn from '../../components/followBtn/index.tsx';
+import { IFollowedData } from '../../types/follow.ts';
+import { getUserIdFromToken } from '../../utils/auth';
+import axiosWithToken from '../../utils/axiosWithToken';
 
 function Profile() {
   const { userId } = useParams();
@@ -24,6 +28,8 @@ function Profile() {
   });
   const [isModalCreatePostOpen, setIsModalCreatePostOpen] = useState(false);
   const [isModalActionsPostOpen, setIsModalActionsPostOpen] = useState(false);
+
+  const [isFollow, setIsFollow] = useState(false);
 
   const { userData, loading, error, myProfile, refreshUserData } =
     useUserData(userId);
@@ -50,6 +56,40 @@ function Profile() {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    const userIdFromToken = getUserIdFromToken();
+
+    const existFollow = async (): Promise<boolean> => {
+      try {
+        const response = await axiosWithToken.get<{
+          message: string;
+          data: IFollowedData[];
+        }>(`/follow/${userIdFromToken}/following`);
+
+        const data = response.data.data;
+
+        if (data.length !== 0) {
+          return data.some(
+            (item) =>
+              item.follower_user_id === userIdFromToken &&
+              item.followed_user_id._id === userId
+          );
+        }
+
+        return false;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    };
+
+    existFollow().then((data) => {
+      if (data) {
+        setIsFollow(true);
+      }
+    });
+  }, [userId]);
+
   const handleEditProfile = (): void => {
     navigate(`/profile/${userId}/edit`);
   };
@@ -60,6 +100,34 @@ function Profile() {
 
   const handleClickActionsPost = (): void => {
     setIsModalActionsPostOpen(true);
+  };
+
+  const onFollow = async (): Promise<void> => {
+    try {
+      await axiosWithToken.post(`/follow/follow/${userId}`);
+      refreshUserData(userId);
+      setIsFollow(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onUnfollow = async (): Promise<void> => {
+    try {
+      await axiosWithToken.delete(`/follow/unfollow/${userId}`);
+      refreshUserData(userId);
+      setIsFollow(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClickFollow = (): void => {
+    if (isFollow) {
+      onUnfollow();
+    } else {
+      onFollow();
+    }
   };
 
   const closeModalPostData = (): void => {
@@ -110,7 +178,14 @@ function Profile() {
                           minWidth={170}
                         />
                       )}
-                      {!myProfile && <Button name="Follow" minWidth={135} />}
+                      {!myProfile && (
+                        <FollowBtn
+                          isFollow={isFollow}
+                          onClick={handleClickFollow}
+                          typeStyle="primary"
+                          minWidth={135}
+                        />
+                      )}
                       {!myProfile && (
                         <Button
                           name="Message"
@@ -177,6 +252,8 @@ function Profile() {
                   <Post
                     postId={modalPostData.postId}
                     actionsFunc={handleClickActionsPost}
+                    isFollow={isFollow}
+                    onClickFollow={handleClickFollow}
                   />
                 </ModalContainer>
               )}

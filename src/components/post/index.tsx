@@ -11,13 +11,16 @@ import addComment from './../../assets/icons/post_smile.svg';
 import axiosWithToken from '../../utils/axiosWithToken';
 import { getUserIdFromToken } from '../../utils/auth';
 import Button from '../button';
+import FollowBtn from '../followBtn';
 
 interface IPostProps {
   postId: string;
   actionsFunc: () => void;
+  isFollow: boolean;
+  onClickFollow: () => void;
 }
 
-function Post({ postId, actionsFunc }: IPostProps) {
+function Post({ postId, actionsFunc, isFollow, onClickFollow }: IPostProps) {
   const { postData, loading, error, myProfile, refreshPostData } =
     usePostData(postId);
 
@@ -86,8 +89,7 @@ function Post({ postId, actionsFunc }: IPostProps) {
                 </div>
               ) : (
                 <div>
-                  <div></div>
-                  <Button name="Follow" typeStyle="text" minWidth={85} />
+                  <FollowBtn isFollow={isFollow} onClick={onClickFollow} />
                 </div>
               )}
             </div>
