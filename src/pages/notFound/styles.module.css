@@ -1,0 +1,36 @@
+.page_container {
+    display: flex;
+    gap: 43px;
+    justify-content: center;
+    align-items: start;
+    margin: 93px auto 0;
+
+}
+
+.image {
+    max-width: 302px;
+}
+
+.info_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 625px;
+    margin-top: 47px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 57px;
+    color: #000000;
+}
+
+.text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #737373;
+    max-width: 475px;
+}

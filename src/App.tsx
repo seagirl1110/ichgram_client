@@ -10,6 +10,7 @@ import { isTokenValid } from './utils/auth.ts';
 import Explore from './pages/explore/index.tsx';
 import Messages from './pages/messages/index.tsx';
 import Notifications from './pages/Notifications/index.tsx';
+import NotFound from './pages/notFound/index.tsx';
 
 function App() {
   return (
@@ -82,6 +83,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Notifications />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <NotFound />
             </ProtectedRoute>
           }
         />
