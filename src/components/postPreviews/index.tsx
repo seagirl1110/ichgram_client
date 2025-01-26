@@ -4,11 +4,23 @@ interface IPostPreviewsProps {
   images: string[];
   description: string;
   onClick: () => void;
+  width?: number;
+  height?: number;
 }
 
-function PostPreviews({ images, description, onClick }: IPostPreviewsProps) {
+function PostPreviews({
+  images,
+  description,
+  onClick,
+  width = 308,
+  height = 308,
+}: IPostPreviewsProps) {
   return (
-    <div className={styles.post} onClick={onClick}>
+    <div
+      style={{ width: width, height: height }}
+      className={styles.post}
+      onClick={onClick}
+    >
       <img className={styles.post_image} src={images[0]} alt={description} />
     </div>
   );
