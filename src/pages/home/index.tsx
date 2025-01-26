@@ -226,7 +226,10 @@ function Home() {
                   <div className={styles.post} key={index}>
                     <div className={styles.post_row}>
                       <Avatar image={item.user_id.image} />
-                      <Username name={item.user_id.username} />
+                      <Username
+                        name={item.user_id.username}
+                        id={item.user_id._id}
+                      />
                       <Time time={item.created_at} />
                     </div>
                     <PostPreviews

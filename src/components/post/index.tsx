@@ -82,7 +82,7 @@ function Post({ postId, actionsFunc, isFollow, onClickFollow }: IPostProps) {
           <div className={styles.post}>
             <div className={styles.post_profile}>
               <Avatar image={user_id.image} />
-              <Username name={user_id.username} />
+              <Username name={user_id.username} id={user_id._id} />
               {myProfile ? (
                 <div className={styles.post_more_btn} onClick={actionsFunc}>
                   <img src={postMore} alt="more" />
@@ -97,7 +97,7 @@ function Post({ postId, actionsFunc, isFollow, onClickFollow }: IPostProps) {
               <Avatar image={user_id.image} />
               <div className={styles.info}>
                 <div>
-                  <Username name={user_id.username} />
+                  <Username name={user_id.username} id={user_id._id} />
                   <span className={styles.text}>{description}</span>
                 </div>
                 <Time time={created_at} />
@@ -109,7 +109,10 @@ function Post({ postId, actionsFunc, isFollow, onClickFollow }: IPostProps) {
                   <Avatar image={item.user_id.image} />
                   <div className={styles.info}>
                     <div>
-                      <Username name={item.user_id.username} />
+                      <Username
+                        name={item.user_id.username}
+                        id={item.user_id._id}
+                      />
                       <span className={styles.text}>{item.text}</span>
                     </div>
                     <Time time={item.created_at} />

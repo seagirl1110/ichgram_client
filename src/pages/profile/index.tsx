@@ -36,6 +36,7 @@ function Profile() {
     useUserData(userId);
 
   const {
+    _id,
     username,
     bio,
     website,
@@ -58,6 +59,8 @@ function Profile() {
   }, [pathname]);
 
   useEffect(() => {
+    setModalPostData({ isOpen: false, postId: '' });
+
     const userIdFromToken = getUserIdFromToken();
 
     const existFollow = async (): Promise<boolean> => {
@@ -258,6 +261,7 @@ function Profile() {
                   <CreatePost
                     username={username}
                     userImage={image}
+                    userId={_id}
                     createFunc={createPostFunc}
                   />
                 </ModalContainer>

@@ -10,10 +10,16 @@ import smile from './../../assets/icons/post_smile.svg';
 interface ICreatePostProps {
   username: string;
   userImage: string;
+  userId: string;
   createFunc: () => void;
 }
 
-function CreatePost({ username, userImage, createFunc }: ICreatePostProps) {
+function CreatePost({
+  username,
+  userImage,
+  userId,
+  createFunc,
+}: ICreatePostProps) {
   const {
     register,
     handleSubmit,
@@ -57,7 +63,7 @@ function CreatePost({ username, userImage, createFunc }: ICreatePostProps) {
           <div className={styles.post_info}>
             <div className={styles.user_info}>
               <Avatar image={userImage} width={28} />
-              <Username name={username} />
+              <Username name={username} id={userId} />
             </div>
             <textarea
               className={styles.add_post}

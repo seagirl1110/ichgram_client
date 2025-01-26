@@ -46,7 +46,7 @@ function SearchUser() {
             {searchResults.map((item, index) => (
               <div className={styles.results_item} key={index}>
                 <Avatar image={item.image} />
-                <Username name={item.username} />
+                <Username name={item.username} id={item._id} />
               </div>
             ))}
           </div>
