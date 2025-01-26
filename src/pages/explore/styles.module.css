@@ -1,0 +1,17 @@
+.explore_container {
+    width: 100%;
+    position: relative;
+}
+
+.explore_inner {
+    padding: 90px 30px;
+    max-width: 992px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.posts_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}

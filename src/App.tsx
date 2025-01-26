@@ -7,6 +7,7 @@ import Profile from './pages/profile';
 import ProfileEdit from './pages/profileEdit';
 import ProtectedRoute from './components/protectedRoute';
 import { isTokenValid } from './utils/auth.ts';
+import Explore from './pages/explore/index.tsx';
 
 function App() {
   return (
@@ -47,6 +48,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/explore"
+          element={
+            <ProtectedRoute>
+              <Explore />
             </ProtectedRoute>
           }
         />

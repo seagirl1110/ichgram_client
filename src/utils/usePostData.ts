@@ -43,7 +43,7 @@ const usePostData = (postId: string): IUsePostDataReturn => {
         setMyProfile(true);
       }
     } catch (err) {
-      setError(`Failed to load user data. ${err}`);
+      setError(`Failed to load post data. ${err}`);
     } finally {
       setLoading(false);
     }

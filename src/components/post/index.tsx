@@ -15,7 +15,7 @@ import FollowBtn from '../followBtn';
 
 interface IPostProps {
   postId: string;
-  actionsFunc: () => void;
+  actionsFunc?: () => void;
   isFollow: boolean;
   onClickFollow: () => void;
 }

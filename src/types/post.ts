@@ -30,3 +30,7 @@ export interface IPostDataFull {
   created_at: string;
   __v: number;
 }
+
+export interface IPostWithFollow extends IPostDataFull {
+  isFollow: boolean;
+}

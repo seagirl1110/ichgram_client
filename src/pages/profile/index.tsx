@@ -14,6 +14,7 @@ import FollowBtn from '../../components/followBtn/index.tsx';
 import { IFollowedData } from '../../types/follow.ts';
 import { getUserIdFromToken } from '../../utils/auth';
 import axiosWithToken from '../../utils/axiosWithToken';
+import PostPreviews from '../../components/postPreviews/index.tsx';
 
 function Profile() {
   const { userId } = useParams();
@@ -232,19 +233,14 @@ function Profile() {
               </div>
               <div className={styles.posts_container}>
                 {[...posts].reverse().map((item, index) => (
-                  <div
-                    className={styles.post}
+                  <PostPreviews
                     key={index}
+                    images={item.images}
+                    description={item.description}
                     onClick={() => {
                       handleClickPost(item._id);
                     }}
-                  >
-                    <img
-                      className={styles.post_image}
-                      src={item.images[0]}
-                      alt={item.description}
-                    />
-                  </div>
+                  />
                 ))}
               </div>
               {modalPostData.isOpen && (
