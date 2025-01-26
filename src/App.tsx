@@ -28,6 +28,14 @@ function App() {
           }
         />
         <Route
+          path="/home/search-user"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/profile/:userId"
           element={
             <ProtectedRoute>

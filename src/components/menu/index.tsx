@@ -41,6 +41,8 @@ function Menu({ menuList }: IMenuProps) {
             to={
               item === 'Create'
                 ? `/profile/${userId}/create-post`
+                : item === 'Search'
+                ? `/home/search-user`
                 : `/${item.toLowerCase()}`
             }
           >

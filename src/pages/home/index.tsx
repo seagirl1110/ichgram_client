@@ -14,6 +14,8 @@ import Time from '../../components/time/index.tsx';
 import postLikes from './../../assets/icons/post_likes.svg';
 import postComments from './../../assets/icons/post_comments.svg';
 import { ILikeData } from '../../types/like.ts';
+import { useNavigate, useLocation } from 'react-router-dom';
+import SearchUser from '../../components/searchUser/index.tsx';
 
 function Home() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -26,6 +28,19 @@ function Home() {
     userId: '',
     isFollow: false,
   });
+
+  const [isModalSearchUserOpen, setIsModalSearchUserOpen] = useState(false);
+
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pathname.endsWith('search-user')) {
+      setIsModalSearchUserOpen(true);
+    } else {
+      setIsModalSearchUserOpen(false);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const userIdFromToken = getUserIdFromToken();
@@ -191,6 +206,11 @@ function Home() {
     }
   };
 
+  const closeModalSearchUser = (): void => {
+    setIsModalSearchUserOpen(false);
+    navigate('/home');
+  };
+
   return (
     <MainContainer>
       <div className={styles.home_container}>
@@ -270,6 +290,11 @@ function Home() {
                       )
                     }
                   />
+                </ModalContainer>
+              )}
+              {isModalSearchUserOpen && (
+                <ModalContainer onClick={closeModalSearchUser} position="left">
+                  <SearchUser />
                 </ModalContainer>
               )}
             </>

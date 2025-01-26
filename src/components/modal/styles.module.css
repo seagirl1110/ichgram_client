@@ -12,9 +12,20 @@
     padding-top: 50px;
 }
 
+.modal_container_left {
+    padding: 0;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
 .modal_inner {
     cursor: default;
     display: flex;
     flex-basis: 1000px;
     justify-content: center;
+}
+
+.modal_container_left .modal_inner {
+    justify-content: flex-start;
+    flex-basis: 400px;
 }
