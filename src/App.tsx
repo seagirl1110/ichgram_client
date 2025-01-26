@@ -8,6 +8,8 @@ import ProfileEdit from './pages/profileEdit';
 import ProtectedRoute from './components/protectedRoute';
 import { isTokenValid } from './utils/auth.ts';
 import Explore from './pages/explore/index.tsx';
+import Messages from './pages/messages/index.tsx';
+import Notifications from './pages/Notifications/index.tsx';
 
 function App() {
   return (
@@ -64,6 +66,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Explore />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
+              <Messages />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
             </ProtectedRoute>
           }
         />
